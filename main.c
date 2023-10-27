@@ -75,10 +75,10 @@
 
             linha = rand()%20;// Sortear linha
             coluna = rand()%20; // Sortear coluna
-            virar = (rand()%4) + 1; // Sortear a opção virar
+            virar = rand()%4; // Sortear a opção virar
 
             switch(virar){ // switch case para rotação do elemento.
-                case 1: // Opção virado para a direita.
+                case 0: // Opção virado para a direita.
                     if(linha<1 || linha>18 || coluna>18){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -95,7 +95,7 @@
                     }
                 break;
 
-                case 2: // Opção virado para a esquerda.
+                case 1: // Opção virado para a esquerda.
                     if(coluna<1 || linha>18 || linha<1){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -112,7 +112,7 @@
                     }
                 break;
 
-                case 3: // Opção virado para cima
+                case 2: // Opção virado para cima
                     if(coluna<1|| coluna>18 || linha<1){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -129,7 +129,7 @@
                     }
                 break;
 
-                case 4: // Opção virado para baixo
+                case 3: // Opção virado para baixo
                     if(linha>18 || coluna <1 || coluna>18){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -154,10 +154,10 @@
 
             linha = rand()%20; // Sortear linha
             coluna = rand()%20; // Sortear coluna
-            virar = (rand()%2) + 1; // Sortear a opção virar
+            virar = rand()%4; // Sortear a opção virar
 
             switch(virar){
-                case 1: // Opcão horizontal
+                case 0: // Opcão virado para direita
                     if(coluna>16){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -174,7 +174,7 @@
                     }
                 break;
 
-                case 2: // Opcão vertical
+                case 1: // Opcão virado para baixo
                     if(linha>16){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -190,6 +190,40 @@
                         }
                     }
                 break;
+
+                case 2: // Opcão virado para esquerda
+                    if(coluna<3){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
+                    }
+                    else{
+                        if(vet[linha][coluna] != '*' || vet[linha][coluna-1] != '*' || vet[linha][coluna-2] != '*' || vet[linha][coluna-3] != '*'){ // Condição para impedir sobreposição.
+                        }
+                        else{
+                            vet[linha][coluna] = '2';
+                            vet[linha][coluna-1] = '2';
+                            vet[linha][coluna-2] = '2';    // Imprime as posições do submarino a partir da posição (x,y) inicializada.
+                            vet[linha][coluna-3] = '2';
+                            submarino++;
+                            printf("%d %d E %c\n",linha,coluna,vet[linha][coluna]);
+                        }
+                    }
+                break;
+
+                case 3: // Opcão virado para cima
+                    if(linha<3){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
+                    }
+                    else{
+                        if(vet[linha][coluna] != '*' || vet[linha-1][coluna] != '*' || vet[linha-2][coluna] != '*' || vet[linha-3][coluna] != '*'){ // Condição para impedir sobreposição.
+                        }
+                        else{
+                            vet[linha][coluna] = '2';
+                            vet[linha-1][coluna] = '2';
+                            vet[linha-2][coluna] = '2';    // Imprime as posições do submarino a partir da posição (x,y) inicializada.
+                            vet[linha-3][coluna] = '2';
+                            submarino++;
+                            printf("%d %d C %c\n",linha,coluna,vet[linha][coluna]);
+                        }
+                    }
+                break;
             }
         }
         printf("\n");
@@ -199,10 +233,10 @@
 
             linha = rand()%20;// Sortear linha
             coluna = rand()%20; // Sortear coluna
-            virar = (rand()%4) + 1; // Sortear a opção virar
+            virar = rand()%4; // Sortear a opção virar
 
             switch(virar){ // switch case da opção virar que rotaciona o elemento.
-                case 1: // Opção virado para direita
+                case 0: // Opção virado para direita
                     if(linha<1 || linha>18 || coluna>16){  // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -221,7 +255,7 @@
                     }
                 break;
 
-                case 2: // Opção virado para a esquerda.
+                case 1: // Opção virado para a esquerda.
                     if(linha<1 || linha>18 || coluna<3){  // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -240,7 +274,7 @@
                     }
                 break;
 
-                case 3: // Opção virado para baixo.
+                case 2: // Opção virado para baixo.
                     if(coluna<1|| linha>16 || coluna>18){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -259,7 +293,7 @@
                     }
                 break;
 
-                case 4: // Opção virado para cima
+                case 3: // Opção virado para cima
                     if(coluna<1 || linha<3 || coluna>18){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -277,7 +311,6 @@
                         }
                     }
                 break;
-
             }
         }
         printf("\n");
@@ -287,10 +320,10 @@
 
             linha = rand()%20;// Sortear linha
             coluna = rand()%20; // Sortear coluna
-            virar = (rand()%4) + 1; // Sortear a opção virar
+            virar = rand()%4; // Sortear a opção virar
 
             switch(virar){ // switch case da opção virar que rotaciona o elemento.
-                case 1: // Opção virado para direita
+                case 0: // Opção virado para direita
                     if(linha<1 || linha>18 || coluna>16){  // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -309,7 +342,7 @@
                     }
                 break;
 
-                case 2: // Opção virado para a esquerda.
+                case 1: // Opção virado para a esquerda.
                     if(linha<1 || linha>18 || coluna<3){  // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -328,7 +361,7 @@
                     }
                 break;
 
-                case 3: // Opção virado para baixo.
+                case 2: // Opção virado para baixo.
                     if(coluna<1|| linha>16 || coluna>18){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -347,7 +380,7 @@
                     }
                 break;
 
-                case 4: // Opção virado para cima
+                case 3: // Opção virado para cima
                     if(coluna<1 || linha<3 || coluna>18){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -374,10 +407,10 @@
 
             linha = rand()%20; // Sortear linha
             coluna = rand()%20; // Sortear coluna
-            virar = (rand()%2) + 1; // Sortear a opção virar
+            virar = rand()%2; // Sortear a opção virar
 
             switch(virar){
-                case 1: // Opcão horizontal.
+                case 0: // Opcão horizontal.
                     if(coluna>15 || linha>18){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -400,7 +433,7 @@
                     }
                 break;
 
-                case 2: // Opcão vertical.
+                case 1: // Opcão vertical.
                     if(linha>15 || coluna>18){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
@@ -446,8 +479,40 @@
 
             guardar[linha][coluna] = 1;
 
-            // ARRUMAR AQUI.
-
+            if(vet[linha][coluna]=='0'){
+                vet[linha][coluna] = '0';
+                contador--;
+                acerto++;
+            }
+            else if(vet[linha][coluna]=='1'){
+                vet[linha][coluna] = '1';
+                contador--;
+                acerto++;
+            }
+            else if(vet[linha][coluna]=='2'){
+                vet[linha][coluna] = '2';
+                contador--;
+                acerto++;
+            }
+            else if(vet[linha][coluna]=='3'){
+                vet[linha][coluna] = '3';
+                contador--;
+                acerto++;
+            }
+            else if(vet[linha][coluna]=='4'){
+                vet[linha][coluna] = '4';
+                contador--;
+                acerto++;
+            }
+            else if(vet[linha][coluna]=='5'){
+                vet[linha][coluna] = '5';
+                contador--;
+                acerto++;
+            }
+            else{
+                vet[linha][coluna] = '#';
+                erro++;
+            }
             printf("%d %d (%c)\n",linha,coluna,vet[linha][coluna]);
             vet2[linha][coluna] = vet[linha][coluna];
         }
@@ -455,7 +520,6 @@
         printf("Acertos totais: %d\n",acerto);
         printf("Erros: %d\n",erro);
     }
-
     int main(){
 
         char vet[TAM][TAM];
@@ -468,26 +532,21 @@
         printf("\n");
         printf("[1] Sortear\n");
         scanf("%d",&sortear);
-
         if(sortear==1){
             SortearMatriz(vet);
             printf("\n");
             PrintarMatriz(vet);
         }
-
         printf("\n");
         printf("[1] Esconder o tabuleiro\n");
         scanf("%d",&esconder);
-
         if(esconder==1){
             EsconderMatriz(vet2);
             PrintarMatriz(vet2);
         }
-
         printf("\n");
         printf("[1] Jogar\n");
         scanf("%d",&jogar);
-
         if(jogar==1){
             printf("Posicoes sorteadas pelo resolvedor:\n");
             Jogar(vet,vet2);
@@ -496,6 +555,5 @@
             printf("\n");
             printf("Jogo finalizado!\n");
         }
-
         return 0;
     }
