@@ -43,7 +43,7 @@
         int i,j,linha,coluna,virar;
         int boia = 0, aviao = 0, submarino = 0, espiao_1 = 0, espiao_2 = 0, porta_avioes = 0; // Variavél de cada elemento.
         int contador = (BOMAX * 1) + (AVMAX * 4) + (SUMAX * 4) + (E1MAX * 6) + (E2MAX * 6) + (PAMAX * 10); // Contador dos elementos.
-        srand(1);
+        srand(time(NULL));
 
         while(boia<BOMAX){
 
@@ -259,15 +259,15 @@
                     if(coluna<1|| linha>16 || coluna>18){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
-                        if(vet[linha][coluna] != '*' || vet[linha][coluna+1] != '*' || vet[linha][coluna-1] != '*' || vet[linha-1][coluna] != '*' || vet[linha-2][coluna] != '*' || vet[linha-3][coluna] != '*'){ // Condição para impedir sobreposição.
+                        if(vet[linha][coluna] != '*' || vet[linha][coluna+1] != '*' || vet[linha][coluna-1] != '*' || vet[linha+1][coluna] != '*' || vet[linha+2][coluna] != '*' || vet[linha+3][coluna] != '*'){ // Condição para impedir sobreposição.
                         }
                         else{
                             vet[linha][coluna] = '3';
                             vet[linha][coluna+1] = '3';
                             vet[linha][coluna-1] = '3';
-                            vet[linha-1][coluna] = '3';     // Imprime as posições do espião 1 a partir da posição (x,y) inicializada.
-                            vet[linha-2][coluna] = '3';
-                            vet[linha-3][coluna] = '3';
+                            vet[linha+1][coluna] = '3';     // Imprime as posições do espião 1 a partir da posição (x,y) inicializada.
+                            vet[linha+2][coluna] = '3';
+                            vet[linha+3][coluna] = '3';
                             espiao_1++;
                             printf("%d %d B %c\n",linha,coluna,vet[linha][coluna]);
                         }
@@ -343,15 +343,15 @@
                     if(coluna<1|| linha>16 || coluna>18){ // Condição que lê se o elemento pode ser impresso inteiramente na matriz.
                     }
                     else{
-                        if(vet[linha][coluna] != '*' || vet[linha][coluna+1] != '*' || vet[linha][coluna-1] != '*' || vet[linha-1][coluna] != '*' || vet[linha-2][coluna] != '*' || vet[linha-3][coluna] != '*'){ // Condição para impedir sobreposição.
+                        if(vet[linha][coluna] != '*' || vet[linha][coluna+1] != '*' || vet[linha][coluna-1] != '*' || vet[linha+1][coluna] != '*' || vet[linha+2][coluna] != '*' || vet[linha+3][coluna] != '*'){ // Condição para impedir sobreposição.
                         }
                         else{
                             vet[linha][coluna] = '4';
                             vet[linha][coluna+1] = '4';
                             vet[linha][coluna-1] = '4';
-                            vet[linha-1][coluna] = '4';     // Imprime as posições do espião 1 a partir da posição (x,y) inicializada.
-                            vet[linha-2][coluna] = '4';
-                            vet[linha-3][coluna] = '4';
+                            vet[linha+1][coluna] = '4';     // Imprime as posições do espião 1 a partir da posição (x,y) inicializada.
+                            vet[linha+2][coluna] = '4';
+                            vet[linha+3][coluna] = '4';
                             espiao_2++;
                             printf("%d %d B %c\n",linha,coluna,vet[linha][coluna]);
                         }
@@ -483,7 +483,7 @@
         int linha,coluna,acerto = 0,erro = 0, jogadas = 0;
         int contador = (BOMAX * 1) + (AVMAX * 4) + (SUMAX * 4) + (E1MAX * 6) + (E2MAX * 6) + (PAMAX * 10); // Contador da quantidade e tamanho dos elementos.
         int guardar[TAM][TAM];
-        srand(1);
+        srand(time(NULL));
 
         for(int i=0; i<TAM; i++){
             for(int j=0; j<TAM; j++){
@@ -499,7 +499,6 @@
             }while(guardar[linha][coluna]==1);  // Impedir o rand de sortear valores repetidos.
 
             guardar[linha][coluna] = 1;
-            printf("Linha[%d] Coluna[%d] Alvo[%c]\n",linha,coluna,vet[linha][coluna]);
             if(vet[linha][coluna]=='0'){
                 vet[linha][coluna] = '0';
                 contador--;
@@ -535,8 +534,6 @@
                 erro++;
             }
             vet2[linha][coluna] = vet[linha][coluna];
-            PrintarMatriz(vet2);
-            printf("\n");
         }while(contador>0);
         printf("\n");
         printf("Acertos totais: %d\n",acerto);
