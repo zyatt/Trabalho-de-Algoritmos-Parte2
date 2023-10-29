@@ -9,16 +9,10 @@
 #define E2MAX 4
 #define PAMAX 2
 
-    void InicializarMatriz(char vet[TAM][TAM]){ // Inicializa a matriz com todas as posições como '*'.
+    void InicializarMatriz(char vet[TAM][TAM],char vet2[TAM][TAM]){ // Inicializa a matriz com todas as posições como '*'.
         for(int i=0; i<TAM; i++){
             for(int j = 0; j<TAM; j++){
                 vet[i][j] = '*';
-            }
-        }
-    }
-    void EsconderMatriz(char vet2[TAM][TAM]){ // Esconde a matriz.
-        for(int i=0; i<TAM; i++){
-            for(int j=0; j<TAM; j++){
                 vet2[i][j] = '*';
             }
         }
@@ -49,7 +43,7 @@
         int i,j,linha,coluna,virar;
         int boia = 0, aviao = 0, submarino = 0, espiao_1 = 0, espiao_2 = 0, porta_avioes = 0; // Variavél de cada elemento.
         int contador = (BOMAX * 1) + (AVMAX * 4) + (SUMAX * 4) + (E1MAX * 6) + (E2MAX * 6) + (PAMAX * 10); // Contador dos elementos.
-        srand(time(NULL));
+        srand(1);
 
         while(boia<BOMAX){
 
@@ -486,10 +480,10 @@
         }
     }
     void Jogar(char vet[TAM][TAM],char vet2[TAM][TAM]){ // Resolvedor.
-        int linha,coluna,acerto = 0,erro = 0;
+        int linha,coluna,acerto = 0,erro = 0, jogadas = 0;
         int contador = (BOMAX * 1) + (AVMAX * 4) + (SUMAX * 4) + (E1MAX * 6) + (E2MAX * 6) + (PAMAX * 10); // Contador da quantidade e tamanho dos elementos.
         int guardar[TAM][TAM];
-        srand(time(NULL));
+        srand(1);
 
         for(int i=0; i<TAM; i++){
             for(int j=0; j<TAM; j++){
@@ -497,15 +491,15 @@
             }
         }
 
-        while(contador!=0){
-
+        do{
+            jogadas++;
             do{
                 linha = rand()%20;
                 coluna = rand()%20;
             }while(guardar[linha][coluna]==1);  // Impedir o rand de sortear valores repetidos.
 
             guardar[linha][coluna] = 1;
-
+            printf("Linha[%d] Coluna[%d] Alvo[%c]\n",linha,coluna,vet[linha][coluna]);
             if(vet[linha][coluna]=='0'){
                 vet[linha][coluna] = '0';
                 contador--;
@@ -540,48 +534,29 @@
                 vet[linha][coluna] = '#';
                 erro++;
             }
-
-            printf("%d %d (%c)\n",linha,coluna,vet[linha][coluna]);
             vet2[linha][coluna] = vet[linha][coluna];
-        }
+            PrintarMatriz(vet2);
+            printf("\n");
+        }while(contador>0);
         printf("\n");
         printf("Acertos totais: %d\n",acerto);
         printf("Erros: %d\n",erro);
+        printf("Jogadas: %d\n",jogadas);
     }
     int main(){
 
         char vet[TAM][TAM];
         char vet2[TAM][TAM];
-        int jogar,sortear,esconder;
 
-        InicializarMatriz(vet);
+        InicializarMatriz(vet,vet2);
+        SortearMatriz(vet);
+        printf("\n");
         PrintarMatriz(vet);
+        printf("\n");
+        PrintarMatriz(vet2);
+        Jogar(vet,vet2);
+        printf("\n");
+        PrintarMatriz(vet2);
 
-        printf("\n");
-        printf("[1] Sortear\n");
-        scanf("%d",&sortear);
-        if(sortear==1){
-            SortearMatriz(vet);
-            printf("\n");
-            PrintarMatriz(vet);
-        }
-        printf("\n");
-        printf("[1] Esconder o tabuleiro\n");
-        scanf("%d",&esconder);
-        if(esconder==1){
-            EsconderMatriz(vet2);
-            PrintarMatriz(vet2);
-        }
-        printf("\n");
-        printf("[1] Jogar\n");
-        scanf("%d",&jogar);
-        if(jogar==1){
-            printf("Posicoes sorteadas pelo resolvedor:\n");
-            Jogar(vet,vet2);
-            printf("\n");
-            PrintarMatriz(vet2);
-            printf("\n");
-            printf("Jogo finalizado!\n");
-        }
         return 0;
     }
