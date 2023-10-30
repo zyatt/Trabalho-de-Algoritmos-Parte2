@@ -382,7 +382,7 @@
 
             linha = rand()%20; // Sortear linha.
             coluna = rand()%20; // Sortear coluna.
-            virar = rand()%2; // Sortear a opção virar.
+            virar = rand()%4; // Sortear a opção virar.
 
             switch(virar){
                 case 0: // Opcão virado para direita.
