@@ -5,9 +5,9 @@
 #define BOMAX 10 // Valores definidos para o total de cada elemento impresso na matriz.
 #define AVMAX 5
 #define SUMAX 5
-#define E1MAX 0
-#define E2MAX 0
-#define PAMAX 0
+#define E1MAX 4
+#define E2MAX 4
+#define PAMAX 2
 
     void InicializarMatriz(char vet[TAM][TAM],char vet2[TAM][TAM]){ // Inicializa a matriz com todas as posições como '*'.
         for(int i=0; i<TAM; i++){
@@ -499,6 +499,16 @@
             }while(guardar[linha][coluna]==1);  // Impedir o rand de sortear valores repetidos.
             guardar[linha][coluna] = 1;
 
+            if(vet[linha][coluna]=='*'){ // Mar
+                jogadas++;
+                printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
+                vet[linha][coluna] = '#';
+                guardar[linha][coluna] = 1;
+                erro++;
+                vet2[linha][coluna] = vet[linha][coluna];
+                PrintarMatriz(vet2);
+                printf("\n");
+            }
             if(vet[linha][coluna]=='0'){ // Boia.
                 jogadas++;
                 printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
@@ -742,46 +752,299 @@
                 }
             }
             if(vet[linha][coluna]=='3'){ // Espião 1.
+                int TamanhoEspiao1 = 0;
                 jogadas++;
                 printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
                 guardar[linha][coluna] = 1;
                 vet2[linha][coluna] = vet[linha][coluna];
                 contador--;
                 acerto++;
+                TamanhoEspiao1++;
                 PrintarMatriz(vet2);
                 printf("\n");
+                for(int i=linha-3;i<=linha+3&&TamanhoEspiao1<6;i++){
+                    for(int j=coluna-1;j<=coluna+1&&TamanhoEspiao1<6;j++){
+                        if(i>=0 && i<TAM && j>=0 && j<TAM){
+                            if(vet[i][j]=='3'){
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet2[i][j] = vet[i][j];
+                                    contador--;
+                                    acerto++;
+                                    TamanhoEspiao1++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                            else if(vet[i][j]=='*'){
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet[i][j] = '#';
+                                    vet2[i][j] = vet[i][j];
+                                    erro++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                            else{
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet2[i][j] = vet[i][j];
+                                    contador--;
+                                    acerto++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                        }
+                    }
+                }
+                for(int i=linha-1;i<=linha+1&&TamanhoEspiao1<6;i++){
+                    for(int j=coluna-3;j<=coluna+3&&TamanhoEspiao1<6;j++){
+                        if(i>=0 && i<TAM && j>=0 && j<TAM){
+                            if(vet[i][j]=='3'){
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet2[i][j] = vet[i][j];
+                                    contador--;
+                                    acerto++;
+                                    TamanhoEspiao1++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                            else if(vet[i][j]=='*'){
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet[i][j] = '#';
+                                    vet2[i][j] = vet[i][j];
+                                    erro++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                            else{
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet2[i][j] = vet[i][j];
+                                    contador--;
+                                    acerto++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            if(vet[linha][coluna]=='4'){ // Espião 2.
+            if(vet[linha][coluna]=='4'){ // Espião 1.
+                int TamanhoEspiao2 = 0;
                 jogadas++;
                 printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
                 guardar[linha][coluna] = 1;
                 vet2[linha][coluna] = vet[linha][coluna];
                 contador--;
                 acerto++;
+                TamanhoEspiao2++;
                 PrintarMatriz(vet2);
                 printf("\n");
+                for(int i=linha-3;i<=linha+3&&TamanhoEspiao2<6;i++){
+                    for(int j=coluna-1;j<=coluna+1&&TamanhoEspiao2<6;j++){
+                        if(i>=0 && i<TAM && j>=0 && j<TAM){
+                            if(vet[i][j]=='4'){
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet2[i][j] = vet[i][j];
+                                    contador--;
+                                    acerto++;
+                                    TamanhoEspiao2++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                            else if(vet[i][j]=='*'){
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet[i][j] = '#';
+                                    vet2[i][j] = vet[i][j];
+                                    erro++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                            else{
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet2[i][j] = vet[i][j];
+                                    contador--;
+                                    acerto++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                        }
+                    }
+                }
+                for(int i=linha-1;i<=linha+1&&TamanhoEspiao2<6;i++){
+                    for(int j=coluna-3;j<=coluna+3&&TamanhoEspiao2<6;j++){
+                        if(i>=0 && i<TAM && j>=0 && j<TAM){
+                            if(vet[i][j]=='4'){
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet2[i][j] = vet[i][j];
+                                    contador--;
+                                    acerto++;
+                                    TamanhoEspiao2++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                            else if(vet[i][j]=='*'){
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet[i][j] = '#';
+                                    vet2[i][j] = vet[i][j];
+                                    erro++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                            else{
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet2[i][j] = vet[i][j];
+                                    contador--;
+                                    acerto++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                        }
+                    }
+                }
             }
             if(vet[linha][coluna]=='5'){ // Porta-Avião.
+                int TamanhoPortaAvioes = 0;
                 jogadas++;
                 printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
                 guardar[linha][coluna] = 1;
                 vet2[linha][coluna] = vet[linha][coluna];
                 contador--;
                 acerto++;
+                TamanhoPortaAvioes++;
                 PrintarMatriz(vet2);
                 printf("\n");
+                for(int i=linha-4;i<=linha+4&&TamanhoPortaAvioes<10;i++){
+                    for(int j=coluna-1;j<=coluna+1&&TamanhoPortaAvioes<10;j++){
+                        if(i>=0 && i<TAM && j>=0 && j<TAM){
+                            if(vet[i][j]=='5'){
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet2[i][j] = vet[i][j];
+                                    contador--;
+                                    acerto++;
+                                    TamanhoPortaAvioes++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                            else if(vet[i][j]=='*'){
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet[i][j] = '#';
+                                    vet2[i][j] = vet[i][j];
+                                    erro++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                            else{
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet2[i][j] = vet[i][j];
+                                    contador--;
+                                    acerto++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                        }
+                    }
+                }
+                for(int i=linha-1;i<=linha+1&&TamanhoPortaAvioes<10;i++){
+                    for(int j=coluna-4;j<=coluna+4&&TamanhoPortaAvioes<10;j++){
+                        if(i>=0 && i<TAM && j>=0 && j<TAM){
+                            if(vet[i][j]=='5'){
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet2[i][j] = vet[i][j];
+                                    contador--;
+                                    acerto++;
+                                    TamanhoPortaAvioes++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                            else if(vet[i][j]=='*'){
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet[i][j] = '#';
+                                    vet2[i][j] = vet[i][j];
+                                    erro++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                            else{
+                                if(guardar[i][j]==0){
+                                    jogadas++;
+                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                    guardar[i][j] = 1;
+                                    vet2[i][j] = vet[i][j];
+                                    contador--;
+                                    acerto++;
+                                    PrintarMatriz(vet2);
+                                    printf("\n");
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            if(vet[linha][coluna]=='*'){ // Mar
-                jogadas++;
-                printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
-                vet[linha][coluna] = '#';
-                guardar[linha][coluna] = 1;
-                erro++;
-                vet2[linha][coluna] = vet[linha][coluna];
-                PrintarMatriz(vet2);
-                printf("\n");
-            }
-
         }while(contador>0);
         printf("Acertos: %d\n",acerto);
         printf("Erros: %d\n",erro);
