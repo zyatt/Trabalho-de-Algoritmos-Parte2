@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <time.h>
 #define TAM 20 // Valor definido para o total de linhas e colunas.
-#define BOMAX 50 // Valores definidos para o total de cada elemento impresso na matriz.
+#define BOMAX 10 // Valores definidos para o total de cada elemento impresso na matriz.
 #define AVMAX 5
-#define SUMAX 0
-#define E1MAX 0
-#define E2MAX 0
-#define PAMAX 0
+#define SUMAX 5
+#define E1MAX 4
+#define E2MAX 4
+#define PAMAX 2
 
     void InicializarMatriz(char vet[TAM][TAM],char vet2[TAM][TAM]){ // Inicializa a matriz com todas as posições como '*'.
         for(int i=0; i<TAM; i++){
@@ -500,13 +500,13 @@
 
             if(vet[linha][coluna]=='*'){ // Mar.
                 jogadas++;
-                //printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
+                printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
                 vet[linha][coluna] = '#';
                 guardar[linha][coluna] = 1;
                 erro++;
                 vet2[linha][coluna] = vet[linha][coluna];
-                //PrintarMatriz(vet2);
-                //printf("\n");
+                PrintarMatriz(vet2);
+                printf("\n");
             }
             if(vet[linha][coluna]=='0'){ // Boia.
                 jogadas++;
