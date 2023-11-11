@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <time.h>
 #define TAM 20 // Valor definido para o total de linhas e colunas.
-#define BOMAX 10 // Valores definidos para o total de cada elemento impresso na matriz.
+#define BOMAX 50 // Valores definidos para o total de cada elemento impresso na matriz.
 #define AVMAX 5
-#define SUMAX 5
-#define E1MAX 4
-#define E2MAX 4
-#define PAMAX 2
+#define SUMAX 0
+#define E1MAX 0
+#define E2MAX 0
+#define PAMAX 0
 
     void InicializarMatriz(char vet[TAM][TAM],char vet2[TAM][TAM]){ // Inicializa a matriz com todas as posições como '*'.
         for(int i=0; i<TAM; i++){
@@ -43,7 +43,7 @@
         int i,j,linha,coluna,virar;
         int boia = 0, aviao = 0, submarino = 0, espiao_1 = 0, espiao_2 = 0, porta_avioes = 0; // Variavél de cada elemento.
         char letra[TAM] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T'}; // Vetor usado para printar as letras acima da matriz.
-        srand(5);
+        srand(time(NULL));
 
         while(boia<BOMAX){
 
@@ -500,13 +500,13 @@
 
             if(vet[linha][coluna]=='*'){ // Mar.
                 jogadas++;
-                printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
+                //printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
                 vet[linha][coluna] = '#';
                 guardar[linha][coluna] = 1;
                 erro++;
                 vet2[linha][coluna] = vet[linha][coluna];
-                PrintarMatriz(vet2);
-                printf("\n");
+                //PrintarMatriz(vet2);
+                //printf("\n");
             }
             if(vet[linha][coluna]=='0'){ // Boia.
                 jogadas++;
@@ -533,6 +533,9 @@
                 printf("\n");
                 AcertosPossiveis++;
                 for(int i=linha-2;i<=linha+2&&TamanhoAviao<4&&contador>0;i++){ // A partir daqui começa os testes de possíveis posições do avião. Começando verticalmente.
+                    if(i<0 || i>=TAM){
+                        ErrosPossiveis++;
+                    }
                     if(i>=0 && i<TAM){
                         if(vet[i][coluna]=='1'){ // Posição encontrada.
                             if(guardar[i][coluna]==0){
@@ -561,7 +564,7 @@
                                 ErrosPossiveis++; // Variável de controle para evitar testes desnecessários.
                             }
                         }
-                        else if(vet[i][coluna]=='#'){
+                        else if(vet[i][coluna]!='1'&&guardar[i][coluna]==1){
                             ErrosPossiveis++;
                         }
                         else{ // Qualquer outro elemento diferente do avião e mar.
@@ -718,7 +721,7 @@
                     }
                 }
                 if(AcertosPossiveis==2&&ErrosPossiveis==3){ // Testes de possíveis posições.
-                    for(int i=linha-1;i<=linha+1&&TamanhoAviao<4&&contador>0;i++){
+                    for(int i=linha-1;i<=linha-1&&TamanhoAviao<4&&contador>0;i++){
                         for(int j=coluna-1;j<=coluna+1&&TamanhoAviao<4&&contador>0;j++){
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='1'){
@@ -744,7 +747,11 @@
                                         erro++;
                                         PrintarMatriz(vet2);
                                         printf("\n");
+                                        ErrosPossiveis++;
                                     }
+                                }
+                                else if(vet[i][j]!='1'&&guardar[i][j]==1){
+                                    ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do avião e mar.
                                     if(guardar[i][j]==0){
@@ -756,6 +763,80 @@
                                         acerto++;
                                         PrintarMatriz(vet2);
                                         printf("\n");
+                                        ErrosPossiveis++;
+                                    }
+                                }
+                            }
+                            if(ErrosPossiveis==4){
+                                break;
+                            }
+                        }
+                    }
+                    for(int i=linha;i<=linha&&TamanhoAviao<4&&contador>0;i++){
+                        for(int j=coluna-1;j<=coluna+1&&TamanhoAviao<4&&contador>0;j++){
+                            if(i>=0 && i<TAM && j>=0 && j<TAM){
+                                if(vet[i][j]=='1'){
+                                    if(guardar[i][j]==0){
+                                        jogadas++;
+                                        printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                        guardar[i][j] = 1;
+                                        vet2[i][j] = vet[i][j];
+                                        contador--;
+                                        acerto++;
+                                        TamanhoAviao++;
+                                        PrintarMatriz(vet2);
+                                        printf("\n");
+                                    }
+                                }
+                                else if(vet[i][j]=='*'){
+                                    if(guardar[i][j]==0){
+                                        jogadas++;
+                                        printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                        guardar[i][j] = 1;
+                                        vet[i][j] = '#';
+                                        vet2[i][j] = vet[i][j];
+                                        erro++;
+                                        PrintarMatriz(vet2);
+                                        printf("\n");
+                                        ErrosPossiveis++;
+                                    }
+                                }
+                                else if(vet[i][j]!='1'&&guardar[i][j]==1){
+                                    ErrosPossiveis++;
+                                }
+                                else{ // Qualquer outro elemento diferente do avião e mar.
+                                    if(guardar[i][j]==0){
+                                        jogadas++;
+                                        printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                        guardar[i][j] = 1;
+                                        vet2[i][j] = vet[i][j];
+                                        contador--;
+                                        acerto++;
+                                        PrintarMatriz(vet2);
+                                        printf("\n");
+                                        ErrosPossiveis++;
+                                    }
+                                }
+                            }
+                            if(ErrosPossiveis==5){
+                                break;
+                            }
+                        }
+                    }
+                    for(int i=linha+1;i<=linha+1&&TamanhoAviao<4&&contador>0;i++){
+                        for(int j=coluna-1;j<=coluna+1&&TamanhoAviao<4&&contador>0;j++){
+                            if(i>=0 && i<TAM && j>=0 && j<TAM){
+                                if(vet[i][j]=='1'){
+                                    if(guardar[i][j]==0){
+                                        jogadas++;
+                                        printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                        guardar[i][j] = 1;
+                                        vet2[i][j] = vet[i][j];
+                                        contador--;
+                                        acerto++;
+                                        TamanhoAviao++;
+                                        PrintarMatriz(vet2);
+                                        printf("\n");
                                     }
                                 }
                             }
@@ -765,6 +846,9 @@
                 AcertosPossiveis = 1; // Reseta a variável acertos para os testes na horizontal.
                 ErrosPossiveis = 0; // Reseta a variável erros para os testes na horizontal.
                 for(int j=coluna-2;j<=coluna+2&&TamanhoAviao<4&&contador>0;j++){ // Agora buscando horizontalmente.
+                    if(j<0 || j>=TAM){
+                        ErrosPossiveis++;
+                    }
                     if(j>=0 && j<TAM){
                         if(vet[linha][j]=='1'){
                             if(guardar[linha][j]==0){
@@ -793,7 +877,7 @@
                                 ErrosPossiveis++;
                             }
                         }
-                        else if(vet[linha][j]=='#'){
+                        else if(vet[linha][j]!='1'&&guardar[linha][j]==1){
                             ErrosPossiveis++;
                         }
                         else{ // Qualquer outro elemento diferente do avião e mar.
@@ -950,8 +1034,8 @@
                     }
                 }
                 if(AcertosPossiveis==2&&ErrosPossiveis==3){ // Testes de possíveis posições.
-                    for(int i=linha-1;i<=linha+1&&TamanhoAviao<4&&contador>0;i++){
-                        for(int j=coluna-1;j<=coluna+1&&TamanhoAviao<4&&contador>0;j++){
+                    for(int j=coluna-1;j<=coluna-1&&TamanhoAviao<4&&contador>0;j++){
+                        for(int i=linha-1;i<=linha+1&&TamanhoAviao<4&&contador>0;i++){
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='1'){
                                     if(guardar[i][j]==0){
@@ -976,7 +1060,11 @@
                                         erro++;
                                         PrintarMatriz(vet2);
                                         printf("\n");
+                                        ErrosPossiveis++;
                                     }
+                                }
+                                else if(vet[i][j]!='1'&&guardar[i][j]==1){
+                                    ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do avião e mar.
                                     if(guardar[i][j]==0){
@@ -988,50 +1076,30 @@
                                         acerto++;
                                         PrintarMatriz(vet2);
                                         printf("\n");
+                                        ErrosPossiveis++;
                                     }
                                 }
                             }
+                            if(ErrosPossiveis==4){
+                                break;
+                            }
                         }
                     }
-                }
-                for(int i=linha-1;i<=linha+1&&TamanhoAviao<4&&contador>0;i++){ // Último teste, apenas garantia.
-                    for(int j=coluna-1;j<=coluna+1&&TamanhoAviao<4&&contador>0;j++){
-                        if(i>=0 && i<TAM && j>=0 && j<TAM){
-                            if(vet[i][j]=='1'){
-                                if(guardar[i][j]==0){
-                                    jogadas++;
-                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
-                                    guardar[i][j] = 1;
-                                    vet2[i][j] = vet[i][j];
-                                    contador--;
-                                    acerto++;
-                                    TamanhoAviao++;
-                                    PrintarMatriz(vet2);
-                                    printf("\n");
-                                }
-                            }
-                            else if(vet[i][j]=='*'){
-                                if(guardar[i][j]==0){
-                                    jogadas++;
-                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
-                                    guardar[i][j] = 1;
-                                    vet[i][j] = '#';
-                                    vet2[i][j] = vet[i][j];
-                                    erro++;
-                                    PrintarMatriz(vet2);
-                                    printf("\n");
-                                }
-                            }
-                            else{ // Qualquer outro elemento diferente do avião e mar.
-                                if(guardar[i][j]==0){
-                                    jogadas++;
-                                    printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
-                                    guardar[i][j] = 1;
-                                    vet2[i][j] = vet[i][j];
-                                    contador--;
-                                    acerto++;
-                                    PrintarMatriz(vet2);
-                                    printf("\n");
+                    for(int j=coluna+1;j<=coluna+1&&TamanhoAviao<4&&contador>0;j++){
+                        for(int i=linha-1;i<=linha+1&&TamanhoAviao<4&&contador>0;i++){
+                            if(i>=0 && i<TAM && j>=0 && j<TAM){
+                                if(vet[i][j]=='1'){
+                                    if(guardar[i][j]==0){
+                                        jogadas++;
+                                        printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                        guardar[i][j] = 1;
+                                        vet2[i][j] = vet[i][j];
+                                        contador--;
+                                        acerto++;
+                                        TamanhoAviao++;
+                                        PrintarMatriz(vet2);
+                                        printf("\n");
+                                    }
                                 }
                             }
                         }
@@ -1079,7 +1147,7 @@
 
                             }
                         }
-                        else if(vet[i][coluna]=='#'){
+                        else if(vet[i][coluna]!='2'&&guardar[i][coluna]==1){
                             ErrosPossiveis++;
                         }
                         else{ // Qualquer outro elemento diferente do avião e mar.
@@ -1188,7 +1256,7 @@
                                 ErrosPossiveis++; // Variável de controle para evitar testes desnecessários.
                             }
                         }
-                        else if(vet[i][coluna]!='3'&&vet[i]){
+                        else if(vet[i][coluna]!='3'&&guardar[i][coluna]==1){
                             ErrosPossiveis++;
                         }
                         else{ // Qualquer outro elemento diferente do espião 1 e mar.
@@ -1239,7 +1307,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
@@ -1311,7 +1379,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
@@ -1383,7 +1451,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
@@ -1455,7 +1523,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
@@ -1527,7 +1595,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
@@ -1578,7 +1646,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
@@ -1629,7 +1697,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
@@ -1680,7 +1748,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
@@ -1731,7 +1799,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
@@ -1807,9 +1875,9 @@
                                 ErrosPossiveis++; // Variável de controle para evitar testes desnecessários.
                             }
                         }
-                        else if(vet[linha][j]=='#'){
-                            ErrosPossiveis++;
-                        }
+                        else if(vet[linha][j]!='3'&&guardar[linha][j]==1){
+                                    ErrosPossiveis++;
+                                }
                         else{ // Qualquer outro elemento diferente do espião 1 e mar.
                             if(guardar[linha][j]==0){
                                 jogadas++;
@@ -1879,7 +1947,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
@@ -1929,7 +1997,7 @@
                                         printf("\n");
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
@@ -1978,7 +2046,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
@@ -2028,7 +2096,7 @@
                                         printf("\n");
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
@@ -2102,6 +2170,9 @@
                                         ErrosPossiveis++;
                                     }
                                 }
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
+                                    ErrosPossiveis++;
+                                }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
                                     if(guardar[i][j]==0){
                                         jogadas++;
@@ -2150,6 +2221,9 @@
                                         ErrosPossiveis++;
                                     }
                                 }
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
+                                    ErrosPossiveis++;
+                                }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
                                     if(guardar[i][j]==0){
                                         jogadas++;
@@ -2197,6 +2271,9 @@
                                         printf("\n");
                                         ErrosPossiveis++;
                                     }
+                                }
+                                else if(vet[i][j]!='3'&&guardar[i][j]==1){
+                                    ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 1 e mar.
                                     if(guardar[i][j]==0){
@@ -2308,7 +2385,7 @@
                                 ErrosPossiveis++; // Variável de controle para evitar testes desnecessários.
                             }
                         }
-                        else if(vet[i][coluna]=='#'){
+                        else if(vet[i][coluna]!='4'&&guardar[i][coluna]==1){
                             ErrosPossiveis++;
                         }
                         else{ // Qualquer outro elemento diferente do espião 2 e mar.
@@ -2359,7 +2436,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
@@ -2431,7 +2508,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
@@ -2503,7 +2580,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
@@ -2575,7 +2652,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
@@ -2647,7 +2724,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
@@ -2698,7 +2775,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
@@ -2749,7 +2826,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
@@ -2800,7 +2877,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
@@ -2851,7 +2928,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
@@ -2927,7 +3004,7 @@
                                 ErrosPossiveis++; // Variável de controle para evitar testes desnecessários.
                             }
                         }
-                        else if(vet[linha][j]=='#'){
+                        else if(vet[linha][j]!='4'&&guardar[linha][j]==1){
                             ErrosPossiveis++;
                         }
                         else{ // Qualquer outro elemento diferente do espião 2 e mar.
@@ -2999,7 +3076,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
@@ -3049,7 +3126,7 @@
                                         printf("\n");
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
@@ -3098,7 +3175,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
@@ -3148,7 +3225,7 @@
                                         printf("\n");
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
@@ -3222,6 +3299,9 @@
                                         ErrosPossiveis++;
                                     }
                                 }
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
+                                    ErrosPossiveis++;
+                                }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
                                     if(guardar[i][j]==0){
                                         jogadas++;
@@ -3270,6 +3350,9 @@
                                         ErrosPossiveis++;
                                     }
                                 }
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
+                                    ErrosPossiveis++;
+                                }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
                                     if(guardar[i][j]==0){
                                         jogadas++;
@@ -3317,6 +3400,9 @@
                                         printf("\n");
                                         ErrosPossiveis++;
                                     }
+                                }
+                                else if(vet[i][j]!='4'&&guardar[i][j]==1){
+                                    ErrosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do espião 2 e mar.
                                     if(guardar[i][j]==0){
@@ -3425,7 +3511,7 @@
                                 ErrosPossiveis++; // Variável de controle para evitar testes desnecessários.
                             }
                         }
-                        else if(vet[i][coluna]=='#'){
+                        else if(vet[i][coluna]!='5'&&guardar[i][coluna]==1){
                             ErrosPossiveis++;
                         }
                         else{ // Qualquer outro elemento diferente do porta-aviões e mar.
@@ -3476,7 +3562,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='5'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{
@@ -3548,7 +3634,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='5'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{
@@ -3620,7 +3706,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='5'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{
@@ -3692,7 +3778,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='5'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{
@@ -3764,7 +3850,7 @@
                                         ErrosPossiveis++;
                                     }
                                 }
-                                else if(vet[i][j]=='#'){
+                                else if(vet[i][j]!='5'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
                                 }
                                 else{
@@ -3819,7 +3905,7 @@
                                     ErrosPossiveis++; // Variável de controle para evitar testes desnecessários.
                                 }
                             }
-                            else if(vet[linha][j]=='#'){
+                            else if(vet[linha][j]!='5'&&guardar[linha][j]==1){
                                 ErrosPossiveis++;
                             }
                             else{ // Qualquer outro elemento diferente do porta-aviões e mar.
@@ -3870,7 +3956,7 @@
                                             ErrosPossiveis++;
                                         }
                                     }
-                                    else if(vet[i][j]=='#'){
+                                    else if(vet[i][j]!='5'&&guardar[i][j]==1){
                                         ErrosPossiveis++;
                                     }
                                     else{
@@ -3942,7 +4028,7 @@
                                             ErrosPossiveis++;
                                         }
                                     }
-                                    else if(vet[i][j]=='#'){
+                                    else if(vet[i][j]!='5'&&guardar[i][j]==1){
                                         ErrosPossiveis++;
                                     }
                                     else{
@@ -4014,7 +4100,7 @@
                                             ErrosPossiveis++;
                                         }
                                     }
-                                    else if(vet[i][j]=='#'){
+                                    else if(vet[i][j]!='5'&&guardar[i][j]==1){
                                         ErrosPossiveis++;
                                     }
                                     else{
@@ -4086,7 +4172,7 @@
                                             ErrosPossiveis++;
                                         }
                                     }
-                                    else if(vet[i][j]=='#'){
+                                    else if(vet[i][j]!='5'&&guardar[i][j]==1){
                                         ErrosPossiveis++;
                                     }
                                     else{
@@ -4158,7 +4244,7 @@
                                             ErrosPossiveis++;
                                         }
                                     }
-                                    else if(vet[i][j]=='#'){
+                                    else if(vet[i][j]!='5'&&guardar[i][j]==1){
                                         ErrosPossiveis++;
                                     }
                                     else{
