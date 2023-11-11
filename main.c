@@ -495,18 +495,17 @@
             do{
                 linha = rand()%20;
                 coluna = rand()%20;
-            }while(guardar[linha][coluna]==1);  // Impedir o rand de sortear valores repetidos.
+             }while(guardar[linha][coluna]==1);  // Impedir o rand de sortear valores repetidos.
             guardar[linha][coluna] = 1; // Guarda os valores sorteador no cache, está aqui apenas por garantia.
-
             if(vet[linha][coluna]=='*'){ // Mar.
                 jogadas++;
-                printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
+                //printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
                 vet[linha][coluna] = '#';
                 guardar[linha][coluna] = 1;
                 erro++;
                 vet2[linha][coluna] = vet[linha][coluna];
-                PrintarMatriz(vet2);
-                printf("\n");
+                //PrintarMatriz(vet2);
+                //printf("\n");
             }
             if(vet[linha][coluna]=='0'){ // Boia.
                 jogadas++;
@@ -564,6 +563,9 @@
                                 ErrosPossiveis++; // Variável de controle para evitar testes desnecessários.
                             }
                         }
+                        else if(vet[i][coluna]=='1'&&guardar[i][coluna]==1){
+                            AcertosPossiveis++;
+                        }
                         else if(vet[i][coluna]!='1'&&guardar[i][coluna]==1){
                             ErrosPossiveis++;
                         }
@@ -614,6 +616,9 @@
                                         printf("\n");
                                     }
                                 }
+                                else if(vet[i][j]=='1'&&guardar[i][j]==1){
+                                    AcertosPossiveis++;
+                                }
                                 else{ // Qualquer outro elemento diferente do avião e mar.
                                     if(guardar[i][j]==0){
                                         jogadas++;
@@ -658,6 +663,9 @@
                                         PrintarMatriz(vet2);
                                         printf("\n");
                                     }
+                                }
+                                else if(vet[i][j]=='1'&&guardar[i][j]==1){
+                                    AcertosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do avião e mar.
                                     if(guardar[i][j]==0){
@@ -704,6 +712,9 @@
                                         printf("\n");
                                     }
                                 }
+                                else if(vet[i][j]=='1'&&guardar[i][j]==1){
+                                    AcertosPossiveis++;
+                                }
                                 else{ // Qualquer outro elemento diferente do avião e mar.
                                     if(guardar[i][j]==0){
                                         jogadas++;
@@ -749,6 +760,9 @@
                                         printf("\n");
                                         ErrosPossiveis++;
                                     }
+                                }
+                                else if(vet[i][j]=='1'&&guardar[i][j]==1){
+                                    AcertosPossiveis++;
                                 }
                                 else if(vet[i][j]!='1'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
@@ -800,6 +814,9 @@
                                         printf("\n");
                                         ErrosPossiveis++;
                                     }
+                                }
+                                else if(vet[i][j]=='1'&&guardar[i][j]==1){
+                                    AcertosPossiveis++;
                                 }
                                 else if(vet[i][j]!='1'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
@@ -877,6 +894,9 @@
                                 ErrosPossiveis++;
                             }
                         }
+                        else if(vet[linha][j]=='1'&&guardar[linha][j]==1){
+                            AcertosPossiveis++;
+                        }
                         else if(vet[linha][j]!='1'&&guardar[linha][j]==1){
                             ErrosPossiveis++;
                         }
@@ -927,6 +947,9 @@
                                         printf("\n");
                                     }
                                 }
+                                else if(vet[i][j]=='1'&&guardar[i][j]==1){
+                                    AcertosPossiveis++;
+                                }
                                 else{ // Qualquer outro elemento diferente do avião e mar.
                                     if(guardar[i][j]==0){
                                         jogadas++;
@@ -971,6 +994,9 @@
                                         PrintarMatriz(vet2);
                                         printf("\n");
                                     }
+                                }
+                                else if(vet[i][j]=='1'&&guardar[i][j]==1){
+                                    AcertosPossiveis++;
                                 }
                                 else{ // Qualquer outro elemento diferente do avião e mar.
                                     if(guardar[i][j]==0){
@@ -1017,6 +1043,9 @@
                                         printf("\n");
                                     }
                                 }
+                                else if(vet[i][j]=='1'&&guardar[i][j]==1){
+                                    AcertosPossiveis++;
+                                }
                                 else{ // Qualquer outro elemento diferente do avião e mar.
                                     if(guardar[i][j]==0){
                                         jogadas++;
@@ -1062,6 +1091,9 @@
                                         printf("\n");
                                         ErrosPossiveis++;
                                     }
+                                }
+                                else if(vet[i][j]=='1'&&guardar[i][j]==1){
+                                    AcertosPossiveis++;
                                 }
                                 else if(vet[i][j]!='1'&&guardar[i][j]==1){
                                     ErrosPossiveis++;
@@ -1119,6 +1151,9 @@
                 PrintarMatriz(vet2);
                 printf("\n");
                 for(int i=linha-3;i<=linha+3&&TamanhoSub<4&&contador>0;i++){
+                    if(i<0 || i>=TAM){
+                        ErrosPossiveis++;
+                    }
                     if(i>=0 && i<TAM){
                         if(vet[i][coluna]=='2'){
                             if(guardar[i][coluna]==0){
@@ -1169,6 +1204,9 @@
                     }
                 }
                 for(int j=coluna-3;j<=coluna+3&&TamanhoSub<4&&contador>0;j++){
+                    if(j<0 || j>=TAM){
+                        ErrosPossiveis++;
+                    }
                     if(j>=0 && j<TAM){
                         if(vet[linha][j]=='2'){
                             if(guardar[linha][j]==0){
@@ -1280,6 +1318,9 @@
                 if(AcertosPossiveis==4&&ErrosPossiveis==0){
                     for(int i=linha-3;i<=linha-3&&TamanhoEspiao1<6&&contador>0;i++){
                         for(int j=coluna-1;j<=coluna+1&&TamanhoEspiao1<6&&contador>0;j++){
+                            if(vet[linha-3][coluna+1]!='3'&&guardar[linha-3][coluna+1]==1){
+                                break;
+                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='3'){
                                     if(guardar[i][j]==0){
@@ -1352,6 +1393,9 @@
                 if(AcertosPossiveis==4&&ErrosPossiveis==1){
                     for(int i=linha-2;i<=linha-2&&TamanhoEspiao1<6&&contador>0;i++){
                         for(int j=coluna-1;j<=coluna+1&&TamanhoEspiao1<6&&contador>0;j++){
+                            if(vet[linha-2][coluna+1]!='3'&&guardar[linha-2][coluna+1]==1){
+                                break;
+                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='3'){
                                     if(guardar[i][j]==0){
@@ -1424,6 +1468,9 @@
                 if(AcertosPossiveis==4&&ErrosPossiveis==2){
                     for(int i=linha-1;i<=linha-1&&TamanhoEspiao1<6&&contador>0;i++){
                         for(int j=coluna-1;j<=coluna+1&&TamanhoEspiao1<6&&contador>0;j++){
+                            if(vet[linha-1][coluna+1]!='3'&&guardar[linha-1][coluna+1]==1){
+                                break;
+                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='3'){
                                     if(guardar[i][j]==0){
@@ -1496,6 +1543,9 @@
                 if(AcertosPossiveis==4&&ErrosPossiveis==3){
                     for(int i=linha;i<=linha&&TamanhoEspiao1<6&&contador>0;i++){
                         for(int j=coluna-1;j<=coluna+1&&TamanhoEspiao1<6&&contador>0;j++){
+                            if(vet[linha][coluna+1]!='3'&&guardar[linha][coluna+1]==1){
+                                break;
+                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='3'){
                                     if(guardar[i][j]==0){
@@ -1720,7 +1770,7 @@
                         }
                     }
                     for(int i=linha-1;i<=linha-1&&TamanhoEspiao1<6&&contador>0;i++){
-                        for(int j=coluna;j<=coluna+3&&TamanhoEspiao1<6&&contador>0;j++){
+                        for(int j=coluna+1;j<=coluna+3&&TamanhoEspiao1<6&&contador>0;j++){
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='3'){
                                     if(guardar[i][j]==0){
@@ -1771,7 +1821,7 @@
                         }
                     }
                     for(int i=linha;i<=linha&&TamanhoEspiao1<6&&contador>0;i++){
-                        for(int j=coluna;j<=coluna+3&&TamanhoEspiao1<6&&contador>0;j++){
+                        for(int j=coluna+1;j<=coluna+3&&TamanhoEspiao1<6&&contador>0;j++){
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='3'){
                                     if(guardar[i][j]==0){
@@ -1822,7 +1872,7 @@
                         }
                     }
                     for(int i=linha+1;i<=linha+1&&TamanhoEspiao1<6&&contador>0;i++){
-                        for(int j=coluna;j<=coluna+3&&TamanhoEspiao1<6&&contador>0;j++){
+                        for(int j=coluna+1;j<=coluna+3&&TamanhoEspiao1<6&&contador>0;j++){
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='3'){
                                     if(guardar[i][j]==0){
@@ -3538,6 +3588,11 @@
                 if(AcertosPossiveis==5&&ErrosPossiveis==0){ // Caso ele encontre verticalmente.
                     for(int j=coluna-1;j<=coluna-1&&TamanhoPortaAvioes<10&&contador>0;j++){ // Começa testando na coluna da esquerda.
                         for(int i=linha-4;i<=linha&&TamanhoPortaAvioes<10&&contador>0;i++){
+                            if(guardar[linha][coluna-1]==1&&vet[linha][coluna-1]!='5'||guardar[linha-1][coluna-1]==1&&vet[linha-1][coluna-1]!='5'||
+                               guardar[linha-2][coluna-1]==1&&vet[linha-2][coluna-1]!='5'||guardar[linha-3][coluna-1]==1&&vet[linha-3][coluna-1]!='5'||
+                               guardar[linha-4][coluna-1]==1&&vet[linha-4][coluna-1]!='5'){
+                                break; // Aqui ele testa se em alguma posição adjacente à esquerda possui um valor já encontrado diferente de 5.
+                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='5'){
                                     if(guardar[i][j]==0){
@@ -3610,6 +3665,11 @@
                 if(AcertosPossiveis==5&&ErrosPossiveis==1){
                     for(int j=coluna-1;j<=coluna-1&&TamanhoPortaAvioes<10&&contador>0;j++){ // Começa testando na coluna da esquerda.
                         for(int i=linha-3;i<=linha+1&&TamanhoPortaAvioes<10&&contador>0;i++){
+                            if(guardar[linha][coluna-1]==1&&vet[linha][coluna-1]!='5'||guardar[linha+1][coluna-1]==1&&vet[linha+1][coluna-1]!='5'||
+                               guardar[linha-3][coluna-1]==1&&vet[linha-3][coluna-1]!='5'||guardar[linha-2][coluna-1]==1&&vet[linha-2][coluna-1]!='5'||
+                               guardar[linha-1][coluna-1]==1&&vet[linha-1][coluna-1]!='5'){
+                                break; // Aqui ele testa se em alguma posição adjacente à esquerda possui um valor já encontrado diferente de 5.
+                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='5'){
                                     if(guardar[i][j]==0){
@@ -3682,6 +3742,11 @@
                 if(AcertosPossiveis==5&&ErrosPossiveis==2){
                     for(int j=coluna-1;j<=coluna-1&&TamanhoPortaAvioes<10&&contador>0;j++){ // Começa testando na coluna da esquerda.
                         for(int i=linha-2;i<=linha+2&&TamanhoPortaAvioes<10&&contador>0;i++){
+                            if(guardar[linha][coluna-1]==1&&vet[linha][coluna-1]!='5'||guardar[linha+1][coluna-1]==1&&vet[linha+1][coluna-1]!='5'||
+                               guardar[linha+2][coluna-1]==1&&vet[linha+2][coluna-1]!='5'||guardar[linha-1][coluna-1]==1&&vet[linha-1][coluna-1]!='5'||
+                               guardar[linha-2][coluna-1]==1&&vet[linha-2][coluna-1]!='5'){
+                                break; // Aqui ele testa se em alguma posição adjacente à esquerda possui um valor já encontrado diferente de 5.
+                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='5'){
                                     if(guardar[i][j]==0){
@@ -3754,6 +3819,11 @@
                 if(AcertosPossiveis==5&&ErrosPossiveis==3){
                     for(int j=coluna-1;j<=coluna-1&&TamanhoPortaAvioes<10&&contador>0;j++){ // Começa testando na coluna da esquerda.
                         for(int i=linha-1;i<=linha+3&&TamanhoPortaAvioes<10&&contador>0;i++){
+                            if(guardar[linha][coluna-1]==1&&vet[linha][coluna-1]!='5'||guardar[linha-1][coluna-1]==1&&vet[linha-1][coluna-1]!='5'||
+                               guardar[linha+1][coluna-1]==1&&vet[linha+1][coluna-1]!='5'||guardar[linha+2][coluna-1]==1&&vet[linha+2][coluna-1]!='5'||
+                               guardar[linha+3][coluna-1]==1&&vet[linha+3 ][coluna-1]!='5'){
+                                break; // Aqui ele testa se em alguma posição adjacente à esquerda possui um valor já encontrado diferente de 5.
+                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='5'){
                                     if(guardar[i][j]==0){
@@ -3826,6 +3896,11 @@
                 if(AcertosPossiveis==5&&ErrosPossiveis==4){
                     for(int j=coluna-1;j<=coluna-1&&TamanhoPortaAvioes<10&&contador>0;j++){ // Começa testando na coluna da esquerda.
                         for(int i=linha;i<=linha+4&&TamanhoPortaAvioes<10&&contador>0;i++){
+                            if(guardar[linha][coluna-1]==1&&vet[linha][coluna-1]!='5'||guardar[linha+1][coluna-1]==1&&vet[linha+1][coluna-1]!='5'||
+                               guardar[linha+2][coluna-1]==1&&vet[linha+2][coluna-1]!='5'||guardar[linha+3][coluna-1]==1&&vet[linha+3][coluna-1]!='5'||
+                               guardar[linha+4][coluna-1]==1&&vet[linha+4][coluna-1]!='5'){
+                                break; // Aqui ele testa se em alguma posição adjacente à esquerda possui um valor já encontrado diferente de 5.
+                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='5'){
                                     if(guardar[i][j]==0){
@@ -3872,6 +3947,25 @@
                             }
                             if(ErrosPossiveis==5){ // Evitar testes desnecessários.
                                 break;
+                            }
+                        }
+                    }
+                    for(int j=coluna+1;j<=coluna+1&&TamanhoPortaAvioes<10&&contador>0;j++){ // Testa na coluna da direita caso não encontre na outra.
+                        for(int i=linha;i<=linha+4&&TamanhoPortaAvioes<10&&contador>0;i++){
+                            if(i>=0 && i<TAM && j>=0 && j<TAM){
+                                if(vet[i][j]=='5'){
+                                    if(guardar[i][j]==0){
+                                        jogadas++;
+                                        printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
+                                        guardar[i][j] = 1;
+                                        vet2[i][j] = vet[i][j];
+                                        contador--;
+                                        acerto++;
+                                        TamanhoPortaAvioes++;
+                                        PrintarMatriz(vet2);
+                                        printf("\n");
+                                    }
+                                }
                             }
                         }
                     }
@@ -3935,6 +4029,9 @@
                     if(AcertosPossiveis==5&&ErrosPossiveis==0){  // Mesma lógica usada para os testes anteriores na vertical.
                         for(int i=linha-1;i<=linha-1&&TamanhoPortaAvioes<10&&contador>0;i++){
                             for(int j=coluna;j>=coluna-4&&TamanhoPortaAvioes<10&&contador>0;j--){
+                                if(vet[linha-1][coluna]!='5'){
+                                    break;;
+                                }
                                 if(i>=0 && i<TAM && j>=0 && j<TAM){
                                     if(vet[i][j]=='5'){
                                         if(guardar[i][j]==0){
@@ -4007,6 +4104,9 @@
                     if(AcertosPossiveis==5&&ErrosPossiveis==1){ // Mesma lógica usada para os testes anteriores na vertical.
                         for(int i=linha-1;i<=linha-1&&TamanhoPortaAvioes<10&&contador>0;i++){
                             for(int j=coluna-3;j<=coluna+1&&TamanhoPortaAvioes<10&&contador>0;j++){
+                                if(vet[linha-1][coluna]!='5'){
+                                    break;;
+                                }
                                 if(i>=0 && i<TAM && j>=0 && j<TAM){
                                     if(vet[i][j]=='5'){
                                         if(guardar[i][j]==0){
@@ -4079,6 +4179,9 @@
                     if(AcertosPossiveis==5&&ErrosPossiveis==2){ // Mesma lógica usada para os testes anteriores na vertical.
                         for(int i=linha-1;i<=linha-1&&TamanhoPortaAvioes<10&&contador>0;i++){
                             for(int j=coluna-2;j<=coluna+2&&TamanhoPortaAvioes<10&&contador>0;j++){
+                                if(vet[linha-1][coluna]!='5'){
+                                    break;;
+                                }
                                 if(i>=0 && i<TAM && j>=0 && j<TAM){
                                     if(vet[i][j]=='5'){
                                         if(guardar[i][j]==0){
@@ -4151,6 +4254,9 @@
                     if(AcertosPossiveis==5&&ErrosPossiveis==3){ // Mesma lógica usada para os testes anteriores na vertical.
                         for(int i=linha-1;i<=linha-1&&TamanhoPortaAvioes<10&&contador>0;i++){
                             for(int j=coluna-1;j<=coluna+3&&TamanhoPortaAvioes<10&&contador>0;j++){
+                                if(vet[linha-1][coluna]!='5'){
+                                    break;;
+                                }
                                 if(i>=0 && i<TAM && j>=0 && j<TAM){
                                     if(vet[i][j]=='5'){
                                         if(guardar[i][j]==0){
@@ -4223,6 +4329,9 @@
                     if(AcertosPossiveis==5&&ErrosPossiveis==4){ // Mesma lógica usada para os testes anteriores na vertical.
                         for(int i=linha-1;i<=linha-1&&TamanhoPortaAvioes<10&&contador>0;i++){
                             for(int j=coluna;j<=coluna+4&&TamanhoPortaAvioes<10&&contador>0;j++){
+                                if(vet[linha-1][coluna]!='5'){
+                                    break;;
+                                }
                                 if(i>=0 && i<TAM && j>=0 && j<TAM){
                                     if(vet[i][j]=='5'){
                                         if(guardar[i][j]==0){
@@ -4303,18 +4412,24 @@
 
         char vet[TAM][TAM];
         char vet2[TAM][TAM];
+        int jogar_novamente;
 
-        InicializarMatriz(vet,vet2);
-        SortearMatriz(vet);
-        printf("\n");
-        PrintarMatriz(vet);
-        printf("\n");
-        printf("           [Tabuleiro Ocultado]\n");
-        PrintarMatriz(vet2);
-        printf("\n");
-        Jogar(vet,vet2);
-        printf("\n");
-        PrintarMatriz(vet2);
+        do{
+            InicializarMatriz(vet,vet2);
+            SortearMatriz(vet);
+            printf("\n");
+            PrintarMatriz(vet);
+            printf("\n");
+            printf("           [Tabuleiro Ocultado]\n");
+            PrintarMatriz(vet2);
+            printf("\n");
+            Jogar(vet,vet2);
+            printf("\n");
+            PrintarMatriz(vet2);
+            printf("\n");
+            printf("[1] Jogar novamente.\n");
+            scanf("%d",&jogar_novamente);
+        }while(jogar_novamente==1);
 
         return 0;
     }
