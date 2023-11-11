@@ -43,7 +43,7 @@
         int i,j,linha,coluna,virar;
         int boia = 0, aviao = 0, submarino = 0, espiao_1 = 0, espiao_2 = 0, porta_avioes = 0; // Variavél de cada elemento.
         char letra[TAM] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T'}; // Vetor usado para printar as letras acima da matriz.
-        srand(time(NULL));
+        srand(1);
 
         while(boia<BOMAX){
 
@@ -298,7 +298,7 @@
 
             linha = rand()%20;// Sortear linha.
             coluna = rand()%20; // Sortear coluna.
-            virar = rand()%4; // Sortear a opção virar.
+            virar = 3; // Sortear a opção virar.
 
             switch(virar){ // switch case da opção virar que rotaciona o elemento.
                 case 0: // Opção virado para direita
@@ -484,7 +484,7 @@
         int contador = (BOMAX * 1) + (AVMAX * 4) + (SUMAX * 4) + (E1MAX * 6) + (E2MAX * 6) + (PAMAX * 10); // Contador da quantidade e tamanho dos elementos.
         int guardar[TAM][TAM]; // Matriz de Cache
         char letra[TAM] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T'}; // Vetor usado para printar as letras acima da matriz.
-        srand(time(NULL));
+        srand(1);
 
         for(int i=0; i<TAM; i++){
             for(int j=0; j<TAM; j++){
@@ -495,17 +495,18 @@
             do{
                 linha = rand()%20;
                 coluna = rand()%20;
+
              }while(guardar[linha][coluna]==1);  // Impedir o rand de sortear valores repetidos.
             guardar[linha][coluna] = 1; // Guarda os valores sorteador no cache, está aqui apenas por garantia.
             if(vet[linha][coluna]=='*'){ // Mar.
                 jogadas++;
-                //printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
+                printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
                 vet[linha][coluna] = '#';
                 guardar[linha][coluna] = 1;
                 erro++;
                 vet2[linha][coluna] = vet[linha][coluna];
-                //PrintarMatriz(vet2);
-                //printf("\n");
+                PrintarMatriz(vet2);
+                printf("\n");
             }
             if(vet[linha][coluna]=='0'){ // Boia.
                 jogadas++;
@@ -2513,11 +2514,8 @@
                     }
                     for(int i=linha;i<=linha&&TamanhoEspiao2<6&&contador>0;i++){
                         for(int j=coluna-1;j<=coluna+1&&TamanhoEspiao2<6&&contador>0;j++){
-                            if(vet[linha-2][coluna+1]!='4'&&guardar[linha-2][coluna+1]==1){
-                                break;
-                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
-                                if(vet[i][j]=='3'){
+                                if(vet[i][j]=='4'){
                                     if(guardar[i][j]==0){
                                         jogadas++;
                                         printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,i,letra[j],vet[i][j]);
@@ -2612,7 +2610,7 @@
                 if(AcertosPossiveis==4&&ErrosPossiveis==2){
                     for(int i=linha-1;i<=linha-1&&TamanhoEspiao2<6&&contador>0;i++){
                         for(int j=coluna-1;j<=coluna+1&&TamanhoEspiao2<6&&contador>0;j++){
-                            if(vet[linha-1][coluna+1]!='3'&&guardar[linha-1][coluna+1]==1){
+                            if(vet[linha-1][coluna+1]!='4'&&guardar[linha-1][coluna+1]==1){
                                 break;
                             }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
