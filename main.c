@@ -2459,6 +2459,9 @@
                 if(AcertosPossiveis==4&&ErrosPossiveis==0){
                     for(int i=linha-3;i<=linha-3&&TamanhoEspiao2<6&&contador>0;i++){
                         for(int j=coluna-1;j<=coluna+1&&TamanhoEspiao2<6&&contador>0;j++){
+                            if(vet[linha-3][coluna+1]!='4'&&guardar[linha-3][coluna+1]==1){
+                                break;
+                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='4'){
                                     if(guardar[i][j]==0){
@@ -2510,6 +2513,9 @@
                     }
                     for(int i=linha;i<=linha&&TamanhoEspiao2<6&&contador>0;i++){
                         for(int j=coluna-1;j<=coluna+1&&TamanhoEspiao2<6&&contador>0;j++){
+                            if(vet[linha-2][coluna+1]!='4'&&guardar[linha-2][coluna+1]==1){
+                                break;
+                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='3'){
                                     if(guardar[i][j]==0){
@@ -2531,6 +2537,9 @@
                 if(AcertosPossiveis==4&&ErrosPossiveis==1){
                     for(int i=linha-2;i<=linha-2&&TamanhoEspiao2<6&&contador>0;i++){
                         for(int j=coluna-1;j<=coluna+1&&TamanhoEspiao2<6&&contador>0;j++){
+                            if(vet[linha-1][coluna+1]!='4'&&guardar[linha-1][coluna+1]==1){
+                                break;
+                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='4'){
                                     if(guardar[i][j]==0){
@@ -2603,6 +2612,9 @@
                 if(AcertosPossiveis==4&&ErrosPossiveis==2){
                     for(int i=linha-1;i<=linha-1&&TamanhoEspiao2<6&&contador>0;i++){
                         for(int j=coluna-1;j<=coluna+1&&TamanhoEspiao2<6&&contador>0;j++){
+                            if(vet[linha-1][coluna+1]!='3'&&guardar[linha-1][coluna+1]==1){
+                                break;
+                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='4'){
                                     if(guardar[i][j]==0){
@@ -2675,6 +2687,9 @@
                 if(AcertosPossiveis==4&&ErrosPossiveis==3){
                     for(int i=linha;i<=linha&&TamanhoEspiao2<6&&contador>0;i++){
                         for(int j=coluna-1;j<=coluna+1&&TamanhoEspiao2<6&&contador>0;j++){
+                            if(vet[linha][coluna+1]!='4'&&guardar[linha][coluna+1]==1){
+                                break;
+                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='4'){
                                     if(guardar[i][j]==0){
