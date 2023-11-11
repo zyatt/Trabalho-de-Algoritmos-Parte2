@@ -500,13 +500,13 @@
             guardar[linha][coluna] = 1; // Guarda os valores sorteador no cache, está aqui apenas por garantia.
             if(vet[linha][coluna]=='*'){ // Mar.
                 jogadas++;
-                printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
+                //printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
                 vet[linha][coluna] = '#';
                 guardar[linha][coluna] = 1;
                 erro++;
                 vet2[linha][coluna] = vet[linha][coluna];
-                PrintarMatriz(vet2);
-                printf("\n");
+                //PrintarMatriz(vet2);
+                //printf("\n");
             }
             if(vet[linha][coluna]=='0'){ // Boia.
                 jogadas++;
@@ -735,6 +735,9 @@
                 if(AcertosPossiveis==2&&ErrosPossiveis==3){ // Testes de possíveis posições.
                     for(int i=linha-1;i<=linha-1&&TamanhoAviao<4&&contador>0;i++){
                         for(int j=coluna-1;j<=coluna+1&&TamanhoAviao<4&&contador>0;j++){
+                            if(vet[linha-1][coluna]!='1'){
+                                break;
+                            }
                             if(i>=0 && i<TAM && j>=0 && j<TAM){
                                 if(vet[i][j]=='1'){
                                     if(guardar[i][j]==0){
