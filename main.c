@@ -43,7 +43,7 @@
         int i,j,linha,coluna,virar;
         int boia = 0, aviao = 0, submarino = 0, espiao_1 = 0, espiao_2 = 0, porta_avioes = 0; // Variavél de cada elemento.
         char letra[TAM] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T'}; // Vetor usado para printar as letras acima da matriz.
-        srand(time(NULL));
+        srand(5);
 
         while(boia<BOMAX){
 
@@ -500,13 +500,13 @@
 
             if(vet[linha][coluna]=='*'){ // Mar.
                 jogadas++;
-                //printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
+                printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
                 vet[linha][coluna] = '#';
                 guardar[linha][coluna] = 1;
                 erro++;
                 vet2[linha][coluna] = vet[linha][coluna];
-                //PrintarMatriz(vet2);
-                //printf("\n");
+                PrintarMatriz(vet2);
+                printf("\n");
             }
             if(vet[linha][coluna]=='0'){ // Boia.
                 jogadas++;
@@ -1188,7 +1188,7 @@
                                 ErrosPossiveis++; // Variável de controle para evitar testes desnecessários.
                             }
                         }
-                        else if(vet[i][coluna]=='#'){
+                        else if(vet[i][coluna]!='3'&&vet[i]){
                             ErrosPossiveis++;
                         }
                         else{ // Qualquer outro elemento diferente do espião 1 e mar.
