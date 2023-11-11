@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <windows.h>
 #define TAM 20 // Valor definido para o total de linhas e colunas.
 #define BOMAX 10 // Valores definidos para o total de cada elemento impresso na matriz.
 #define AVMAX 5
@@ -484,7 +485,7 @@
         int contador = (BOMAX * 1) + (AVMAX * 4) + (SUMAX * 4) + (E1MAX * 6) + (E2MAX * 6) + (PAMAX * 10); // Contador da quantidade e tamanho dos elementos.
         int guardar[TAM][TAM]; // Matriz de Cache
         char letra[TAM] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T'}; // Vetor usado para printar as letras acima da matriz.
-        srand(1);
+        srand(time(NULL));
 
         for(int i=0; i<TAM; i++){
             for(int j=0; j<TAM; j++){
@@ -498,17 +499,20 @@
 
              }while(guardar[linha][coluna]==1);  // Impedir o rand de sortear valores repetidos.
             guardar[linha][coluna] = 1; // Guarda os valores sorteador no cache, está aqui apenas por garantia.
+
+            Sleep(1000);
+
             if(vet[linha][coluna]=='*'){ // Mar.
                 jogadas++;
-                //printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
+                printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
                 vet[linha][coluna] = '#';
                 guardar[linha][coluna] = 1;
                 erro++;
                 vet2[linha][coluna] = vet[linha][coluna];
-                //PrintarMatriz(vet2);
-                //printf("\n");
+                PrintarMatriz(vet2);
+                printf("\n");
             }
-            if(vet[linha][coluna]=='0'){ // Boia.
+            else if(vet[linha][coluna]=='0'){ // Boia.
                 jogadas++;
                 printf("Jogada [%d] - Linha [%d] Coluna [%c] Alvo [%c]\n",jogadas,linha,letra[coluna],vet[linha][coluna]);
                 guardar[linha][coluna] = 1;
@@ -518,7 +522,7 @@
                 PrintarMatriz(vet2);
                 printf("\n");
             }
-            if(vet[linha][coluna]=='1'){ // Avião.
+            else if(vet[linha][coluna]=='1'){ // Avião.
                 int AcertosPossiveis = 0; // Variável de controle.
                 int ErrosPossiveis = 0; // Variável de controle.
                 int TamanhoAviao = 0; // Variável de controle caso encontre 4 posições.
@@ -1142,7 +1146,7 @@
                     }
                 }
             }
-            if(vet[linha][coluna]=='2'){ // Submarino.
+            else if(vet[linha][coluna]=='2'){ // Submarino.
                 int TamanhoSub = 0; // Variável de controle caso encontre 4 posições.
                 int ErrosPossiveis = 0;
                 jogadas++;
@@ -1252,7 +1256,7 @@
                     }
                 }
             }
-            if(vet[linha][coluna]=='3'){ // Espião 1.
+            else if(vet[linha][coluna]=='3'){ // Espião 1.
                 int TamanhoEspiao1 = 0;
                 int AcertosPossiveis = 0;
                 int ErrosPossiveis = 0;
@@ -2393,7 +2397,7 @@
                     }
                 }
             }
-            if(vet[linha][coluna]=='4'){ // Espião 2.
+            else if(vet[linha][coluna]=='4'){ // Espião 2.
                 int TamanhoEspiao2 = 0;
                 int AcertosPossiveis = 0;
                 int ErrosPossiveis = 0;
@@ -3534,7 +3538,7 @@
                     }
                 }
             }
-            if(vet[linha][coluna]=='5'){ // Porta-Aviões.
+            else if(vet[linha][coluna]=='5'){ // Porta-Aviões.
                 int TamanhoPortaAvioes = 0;
                 int AcertosPossiveis = 0;
                 int ErrosPossiveis = 0;
