@@ -3483,6 +3483,9 @@
                 printf("\n");
                 AcertosPossiveis++;
                 for(int i=linha-4;i<=linha+4&&TamanhoPortaAvioes<10&&contador>0;i++){ // A partir daqui começa os testes de possíveis posições do avião. Começando verticalmente.
+                    if(i<0 || i>=TAM){
+                        ErrosPossiveis++;
+                    }
                     if(i>=0 && i<TAM){
                         if(vet[i][coluna]=='5'){ // Posição encontrada.
                             if(guardar[i][coluna]==0){
@@ -3877,6 +3880,9 @@
                     AcertosPossiveis=1; // Reseta a variável acertos para os testes na horizontal.
                     ErrosPossiveis=0; // Reseta a variável erros para os testes na horizontal.
                     for(int j=coluna-4;j<=coluna+4&&TamanhoPortaAvioes<10&&contador>0;j++){
+                        if(j<0 || j>=TAM){
+                            ErrosPossiveis++;
+                        }
                         if(j>=0 && j<TAM){
                             if(vet[linha][j]=='5'){ // Posição encontrada.
                                 if(guardar[linha][j]==0){
