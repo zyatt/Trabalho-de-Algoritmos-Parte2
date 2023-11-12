@@ -215,7 +215,7 @@
 
             linha = rand()%20;// Sortear linha.
             coluna = rand()%20; // Sortear coluna.
-            virar = 2; // Sortear a opção virar.
+            virar = rand()%4; // Sortear a opção virar.
 
             switch(virar){ // switch case da opção virar que rotaciona o elemento.
                 case 0: // Opção virado para direita
