@@ -485,7 +485,7 @@
         int contador = (BOMAX * 1) + (AVMAX * 4) + (SUMAX * 4) + (E1MAX * 6) + (E2MAX * 6) + (PAMAX * 10); // Contador da quantidade e tamanho dos elementos.
         int guardar[TAM][TAM]; // Matriz de Cache
         char letra[TAM] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T'}; // Vetor usado para printar as letras acima da matriz.
-        srand(1);
+        srand(time(NULL);
 
         for(int i=0; i<TAM; i++){
             for(int j=0; j<TAM; j++){
@@ -500,7 +500,7 @@
              }while(guardar[linha][coluna]==1);  // Impedir o rand de sortear valores repetidos.
             guardar[linha][coluna] = 1; // Guarda os valores sorteador no cache, está aqui apenas por garantia.
 
-            Sleep(1);
+            Sleep(1000);
 
             if(vet[linha][coluna]=='*'){ // Mar.
                 jogadas++;
